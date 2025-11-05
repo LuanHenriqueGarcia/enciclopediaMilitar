@@ -11,6 +11,15 @@ export interface TrajectoryPoint {
   y: number;
   vx: number;
   vy: number;
+  distance?: number;
+  drop?: number;
+}
+
+export interface BallisticTrajectoryPoint {
+  distance: number;
+  drop: number;
+  drop_inches: number;
+  moa: number;
 }
 
 export function calculateTrajectory(params: SimulationParams): TrajectoryPoint[] {
@@ -48,4 +57,9 @@ export function calculateTrajectory(params: SimulationParams): TrajectoryPoint[]
   }
 
   return trajectory;
+}
+
+export function convertDropToMOA(dropInches: number, distanceMeters: number): number {
+  const distanceInches = distanceMeters * 39.37;
+  return (dropInches / distanceInches) * 2.909;
 }
